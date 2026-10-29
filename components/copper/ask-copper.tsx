@@ -144,7 +144,7 @@ export function AskCopper({ aiConfigured }: { aiConfigured: boolean }) {
         <span className="bg-background/90 flex size-9 items-center justify-center overflow-hidden rounded-full">
           <Image
             src="/assets/brand/copper-mascot.png"
-            alt=""
+            alt="Copper the robot mascot"
             width={36}
             height={36}
             className="size-8 object-contain"
@@ -345,7 +345,9 @@ function Answer({ turn, useTools }: { turn: Turn; useTools: boolean }) {
         <Station
           node={<ListIcon className="size-4" />}
           nodeClass={useTools ? "bg-foreground/70" : "bg-chart-3"}
-          label={useTools ? "Tools Copper can use" : "Tools given to Copper: none"}
+          label={
+            useTools ? "Tools Copper can use" : "Tools given to Copper: none"
+          }
         >
           <div className="flex flex-wrap gap-1.5">
             {TOOL_NAMES.map((name) => (
@@ -504,12 +506,19 @@ function Markdown({ text }: { text: string }) {
       {text.split("\n").map((line, i) => (
         <p key={i} className={cn(!line.trim() && "h-2")}>
           {line.split(/(\*\*[^*]+\*\*|`[^`]+`)/).map((piece, j) =>
-            piece.startsWith("**") && piece.endsWith("**") && piece.length > 4 ? (
+            piece.startsWith("**") &&
+            piece.endsWith("**") &&
+            piece.length > 4 ? (
               <strong key={j} className="text-foreground not-italic">
                 {piece.slice(2, -2)}
               </strong>
-            ) : piece.startsWith("`") && piece.endsWith("`") && piece.length > 2 ? (
-              <code key={j} className="bg-muted rounded px-1 font-mono text-xs not-italic">
+            ) : piece.startsWith("`") &&
+              piece.endsWith("`") &&
+              piece.length > 2 ? (
+              <code
+                key={j}
+                className="bg-muted rounded px-1 font-mono text-xs not-italic"
+              >
                 {piece.slice(1, -1)}
               </code>
             ) : (
@@ -606,9 +615,13 @@ function SentInput({ step }: { step: ToolStep }) {
   const input = (step.input ?? {}) as Record<string, unknown>;
   switch (step.name) {
     case "get_prices":
-      return <p className="text-sm">Nothing, it just asked for the price list</p>;
+      return (
+        <p className="text-sm">Nothing, it just asked for the price list</p>
+      );
     case "get_products":
-      return <p className="text-sm">Nothing, it just asked what Copper sells</p>;
+      return (
+        <p className="text-sm">Nothing, it just asked what Copper sells</p>
+      );
     case "calculate_cost": {
       const products = Array.isArray(input.products) ? input.products : [];
       return (
@@ -653,7 +666,13 @@ function SentInput({ step }: { step: ToolStep }) {
 
 type Cost = { lines: { item: string; usd: number }[]; totalUsd: number };
 type ProductList = {
-  products: { id: string; name: string; type: string; priceUsd: number; colors: string[] }[];
+  products: {
+    id: string;
+    name: string;
+    type: string;
+    priceUsd: number;
+    colors: string[];
+  }[];
 };
 type Prices = {
   products: { id: string; name: string; priceUsd: number }[];
@@ -760,7 +779,10 @@ function CameBack({ name, output }: { name: string; output: unknown }) {
           <p className="text-muted-foreground">No stock rows for that color.</p>
         )}
         {result.colors.map((row) => (
-          <div key={row.color} className="flex items-center justify-between gap-4">
+          <div
+            key={row.color}
+            className="flex items-center justify-between gap-4"
+          >
             <span>{row.color}</span>
             <StockPill stock={row.stock} restockDate={row.restockDate} />
           </div>
@@ -784,9 +806,7 @@ function StockPill({
   restockDate: string | null;
 }) {
   if (stock === "backordered") {
-    const until = restockDate
-      ? ` until ${formatDate(restockDate)}`
-      : "";
+    const until = restockDate ? ` until ${formatDate(restockDate)}` : "";
     return (
       <span className="bg-chart-3 rounded-full px-2 py-0.5 text-xs font-semibold text-white">
         Back-ordered{until}

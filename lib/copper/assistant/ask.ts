@@ -24,8 +24,10 @@ export type AskCopperResult = { progress: Live<Progress> };
 /** At most this many model steps (tool calls plus the reply) per question. */
 const MAX_STEPS = 5;
 
-const SORRY_EMPTY = "Sorry, I don't have an answer for that. Could you ask it another way?";
-const SORRY_ERROR = "Sorry, something went wrong on my end. Please try again in a moment.";
+const SORRY_EMPTY =
+  "Sorry, I don't have an answer for that. Could you ask it another way?";
+const SORRY_ERROR =
+  "Sorry, something went wrong on my end. Please try again in a moment.";
 
 export async function askCopper(
   request: AskCopperRequest,
