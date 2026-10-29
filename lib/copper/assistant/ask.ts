@@ -127,7 +127,12 @@ export async function askCopper(
 
       if (!progress.reply.trim()) progress.reply = SORRY_EMPTY;
       progress.status = "done";
-    } catch {
+    } catch (error) {
+      // The message only, so the terminal shows why without any request details.
+      console.error(
+        "[ask-copper]",
+        error instanceof Error ? error.message : String(error),
+      );
       if (!progress.reply.trim()) progress.reply = SORRY_ERROR;
       progress.status = "error";
     }
